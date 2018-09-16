@@ -31,6 +31,13 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 Getting Started
 ---------------
 
+Install rails
+install postgres
+Start Postgres: pg_ctl -D /usr/local/var/postgres start
+Create postgres user: createuser -s -r written
+rake db:setup
+
+
 Documentation and Support
 -------------------------
 
