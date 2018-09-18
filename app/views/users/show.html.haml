@@ -1,0 +1,86 @@
+.w-100.pv4
+  .mw8.center.bg-white.pa2
+    -if @user.searches.present?
+      .tr
+        %p
+          Next Update On:
+          =(@user.searches.last.created_at + 30.days).strftime("%m/%d/%Y")
+        %small
+          Upgrade for updates every 72 hours
+    .flex.flex-row.flex-wrap
+      .w-100.w-50-l
+        %h1
+          =@user.name
+      .w-100.w-50-l
+        -if @user.publications.present?
+          %p.strong
+            Writes for:
+          %ul
+            -@user.publications.each do |p|
+              %li
+                =p.name.titleize
+        -else
+          You haven't added any publications!
+    .w-100.bg-black-30.pa2
+      .flex.flex-row.flex-wrap
+        .w-100.w-50-l
+          %p
+            Website: https://www.example.com
+          %p
+            RSS Feed: https://written.app/example-journalist
+        .w-100.w-50-l
+          %p
+            Follow on Twitter: @examplejournalist
+      %p.tc
+        %small
+          Upgrade for $2.99/m and get profile customization, RSS feeds, an infinite feed of articles, and more.
+    -if @user.stories.present?
+      %h2
+        Latest 15 articles
+      %small
+        Upgrade for an infinite feed of articles, and more.
+      %hr
+      -@user.stories.order(:date_published).limit(15).reverse.each do |s|
+        .pv4.bb.b--black-50
+          %h4.mv1
+            =link_to s.title, s.story_url, :target => "_blank", class: "link dim"
+          %p
+            %span.i
+              =s.publication.name.titleize
+            =s.date_published.strftime("%m/%d/%Y")
+          %p
+            =s.lede
+          .db
+            %a{:href => "https://twitter.com/home?status=#{URI.encode(s.title + " " + s.story_url)}", class: "small link pa1 ph2 br2 ba b--black-50 f7 b bg-white dib dim", style: "color: #1da1f2;", target: "_blank"} 
+              .flex.flex-row.items-center
+                =image_tag 'twitter.svg', class: "w1 h1"
+                %span.pl2
+                  Share on Twitter
+            %a{:href => "https://www.facebook.com/sharer/sharer.php?u=#{URI.encode(s.story_url)}", class: "small link pa1 ph2 br2 ba b--black-80 f7 b bg-white dib dim", style: "color: #3B5998;", target: "_blank"} 
+              .flex.flex-row.items-center
+                =image_tag 'facebook.svg', class: "w1 h1"
+                %span.pl2
+                  Share on Facebook
+            %a{:href => "https://www.linkedin.com/shareArticle?mini=true&url=#{URI.encode(s.story_url)}&title=#{URI.encode(s.title)}&summary=&source=", class: "small link pa1 ph2 br2 ba b--black-80 f7 b bg-white dib dim", style: "color: #0077B5;", target: "_blank"} 
+              .flex.flex-row.items-center
+                =image_tag 'linkedin.svg', class: "w1 h1"
+                %span.pl2
+                  Share on LinkedIn
+            %a.buffer-add-button{"data-count" => "horizontal", "data-url" => "#{URI.encode(s.story_url)}", :href => "http://bufferapp.com/add"}
+            %script{:src => "https://static.buffer.com/js/button.js", :type => "text/javascript"}
+            %a{:href => "#", class: "small link pa1 ph2 br2 ba b--black-80 f7 b bg-white dib dim", style: "color: red;", target: "_blank"} 
+              .flex.flex-row.items-center
+                %span
+                  I didn't write this story
+      .tc
+        %small
+          Upgrade for RSS feeds, profile customisation, an infinite feed of articles, and more.
+    -else
+      -if @user.searches.present?
+        -if @user.results.where(processed_date: nil).count != 0
+          We're still searching for stories for you. Please check back later.
+        -else
+          We searched for stories but couldn't find any recent articles.
+      -unless @user.searches.present?
+        We haven't searched for stories for you from any publication yet.
+        = link_to 'Add a publication I write for', new_publication_path

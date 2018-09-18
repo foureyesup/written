@@ -1,0 +1,23 @@
+=current_user.name
+.w-100.pv4
+  .mw8.center.tc
+    %p
+      Where does your work appear?
+  
+    =form_for(@publication) do |f|
+      .mb3
+        =f.label :root_url, "Publication"
+        =f.text_field :root_url, data: { autocomplete: autocomplete_publication_root_url_publications_path}, placeholder: "Start typing..."
+      .mb3
+        =f.submit "Add Publication"
+  
+:javascript
+  $(document).on('turbolinks:load', function() {
+    return $("input[data-autocomplete]").each(function() {
+      var url;
+      url = $(this).data('autocomplete');
+      return $(this).autocomplete({
+        source: url
+      });
+    });
+  });

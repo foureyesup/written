@@ -37,6 +37,12 @@ Start Postgres: pg_ctl -D /usr/local/var/postgres start
 Create postgres user: createuser -s -r written
 rake db:setup
 
+To start the app locally:
+
+rails s
+redis-server
+bundle exec sidekiq -c 1
+
 
 Documentation and Support
 -------------------------

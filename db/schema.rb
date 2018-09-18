@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_16_051525) do
+ActiveRecord::Schema.define(version: 2018_09_17_020257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2018_09_16_051525) do
     t.string "processing_status"
     t.datetime "processed_date"
     t.text "title"
+    t.datetime "estimated_published_date"
+    t.text "estimated_author"
   end
 
   create_table "searches", force: :cascade do |t|

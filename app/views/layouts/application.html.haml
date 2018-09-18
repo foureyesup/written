@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title Written
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css", :rel => "stylesheet"}
+    %link{:href => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css", :rel => "stylesheet"}/
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"}
+  %body.sans-serif
+    = render :partial => "layouts/nav_links_for_auth"
+    = yield
