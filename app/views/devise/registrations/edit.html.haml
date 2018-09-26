@@ -1,6 +1,17 @@
 %h2
   Edit #{resource_name.to_s.humanize}
   
+
+%h3
+  Remove outlets
+%p
+  We use the list below to scan for your latest articles and automatically add them to your profile. Removing an outlet prevents us from scanning it. Articles that have already been added to your profile will be unaffected.
+%ul
+  -current_user.publications.each do |p|
+    %li
+      ="#{p.name} (#{p.root_url})"
+      =link_to('Remove outlet', remove_user_publication_path(current_user, publication_id: p.id))
+  
 = form_for(current_user) do |c|
   .field
     = c.label :name

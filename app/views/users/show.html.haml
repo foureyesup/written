@@ -18,9 +18,12 @@
           %ul
             -@user.publications.each do |p|
               %li
-                =p.name.titleize
+                = p.name.present? ? p.name.titleize : p.root_url
+            %li
+              = link_to 'Add a new outlet', new_publication_path
         -else
-          You haven't added any publications!
+          You haven't added any publications! 
+          = link_to 'Add a new outlet', new_publication_path
     .w-100.bg-black-30.pa2
       .flex.flex-row.flex-wrap
         .w-100.w-50-l
@@ -40,14 +43,14 @@
       %small
         Upgrade for an infinite feed of articles, and more.
       %hr
-      -@user.stories.order(:date_published).limit(15).reverse.each do |s|
+      -@user.stories.order(:date_published).reverse.each do |s|
         .pv4.bb.b--black-50
           %h4.mv1
             =link_to s.title, s.story_url, :target => "_blank", class: "link dim"
           %p
             %span.i
-              =s.publication.name.titleize
-            =s.date_published.strftime("%m/%d/%Y")
+              =s.publication.name.present? ? s.publication.name.titleize : s.publication.root_url
+            =s.date_published.present? ? s.date_published.strftime("%m/%d/%Y") : ""
           %p
             =s.lede
           .db
@@ -80,7 +83,11 @@
         -if @user.results.where(processed_date: nil).count != 0
           We're still searching for stories for you. Please check back later.
         -else
-          We searched for stories but couldn't find any recent articles.
+          %p
+            We searched for stories but couldn't find any articles from the past 30 days. 
+          %p
+            Want to manually add historical work to your portfolio? Try 
+            =link_to "Clippings.me", "https://www.clippings.me", :target => "_blank"
       -unless @user.searches.present?
         We haven't searched for stories for you from any publication yet.
         = link_to 'Add a publication I write for', new_publication_path

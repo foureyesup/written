@@ -13,11 +13,11 @@ class PublicationsController < ApplicationController
       @publication.save!
       # Code for a new pub
       @user.create_user_search(@publication.id, Time.now - 30.days)
-      format.html { redirect_to user_path(@user), notice: 'Publication was successfully created.' }
+      redirect_to user_path(@user), notice: 'Outlet was successfully created.'
     else
       # Code for an existing pub
       @user.create_user_search(@publication.id, Time.now - 30.days)
-      format.html { redirect_to user_path(@user), notice: 'Publication was successfully added to your profile.' }
+      redirect_to user_path(current_user), notice: 'Outlet was successfully added to your profile.'
     end
   end
   

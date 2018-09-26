@@ -16,6 +16,15 @@ class UsersController < ApplicationController
     }
   end
   
+  def remove_publication_from_user
+     user = current_user
+     publication = user.publications.find(params[:publication_id])
+     if publication
+        user.publications.delete(publication)
+        redirect_to user_path(current_user), notice: 'publication.name has been removed from your outlets.'
+     end
+  end
+  
   private
   
   def user_params

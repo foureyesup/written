@@ -15,7 +15,9 @@ class User < ApplicationRecord
       query: %Q[site:#{publication.root_url} (author:"#{self.name}" OR text:"#{self.name}")],
       user_id: self.id,
       publication_id: publication.id,
-      start_date: start_date
+      start_date: start_date,
+      search_name: self.name,
+      search_url: publication.root_url
     )
   end
   

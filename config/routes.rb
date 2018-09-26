@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   resources :publications do
     get :autocomplete_publication_root_url, on: :collection
   end
+  
+  get '/remove_user_publication', to: 'users#remove_publication_from_user', as: "remove_user_publication"
 end
